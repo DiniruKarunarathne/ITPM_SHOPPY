@@ -1,24 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import Login from "./pages/Login";
+// import Register from "./pages/Register";
+
+// import Home from "./pages/Home/Home";
+// import PrimaryHeader from "./components/PrimaryHeader";
+// import SecondaryHeader from "./components/SecondaryHeader";
+// import Seller from "./pages/Seller";
+// import Customer from "./pages/Customer";
+
+// import Item from "./pages/seller/Item";
+// import Selleritem from "./pages/seller/selleritem";
+// import UpdateItem from "./pages/seller/UpdateItem";
+// import Header from "./components/Header"
+// import Welcome from "./pages/Welcome"
+import CartPage from "./pages/Cart";
+import CheckoutPage from "./pages/Checkout";
+import ProductsPage from "./pages/Shoptest";
+
+
+
+// import Navbar from "./components/Navbar";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+{/* 
+     <PrimaryHeader />
+      <SecondaryHeader /> */}
+     
+
+{/* <Header /> */}
+      
+
+        {" "}
+        {/* Apply margin top to the content after the Header */}
+        <Routes>
+          {/* <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/seller" element={<Seller />} />
+          <Route path="/customer" element={<Customer />} /> */}
+
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/shoptest" element={<ProductsPage />} />
+      
+{/*       
+        <Route path="/item" element={<Item />} />
+        <Route path="/selleritem" element={<Selleritem />} />
+        <Route path="/UpdateItem/:id/edit" element={<UpdateItem />} /> */}
+
+        {/* <Feedback /> */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
