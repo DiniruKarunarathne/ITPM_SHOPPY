@@ -7,6 +7,7 @@ import ProductsPage from "./pages/Shoptest";
 import ContactUs from "./pages/contactus";
 import AdminContactUs from "./admin/admin-contactus";
 import AdminProducts from "./admin/admin-products";
+import AdminOrders from "./admin/admin-order";
 import Home from "./pages/Home/Home";
 import PrimaryHeader from "./components/PrimaryHeader";
 import SecondaryHeader from "./components/SecondaryHeader";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contactus" element={<ContactUs />} />
           <Route path="/admin/contactus" element={<AdminContactUs />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
