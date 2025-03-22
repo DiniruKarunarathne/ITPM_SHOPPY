@@ -1,4 +1,4 @@
-const authRouter = require("./routes/auth.router.js");
+
 const router = require("./routes/sellerRoute.js");
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -29,7 +29,6 @@ const con = require("./db/connection.js");
 
 // using routes
 //authentication route
-app.use(authRouter);
 app.use("/api/seller", require("./routes/sellerRoute.js"));
 
 
