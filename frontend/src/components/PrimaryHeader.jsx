@@ -1,44 +1,51 @@
-import React, { useState, Fragment } from "react";
-import { FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { logout } from "../auth/redux/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.svg"
+import React, { useState, Fragment, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
+import logo from "../assets/logo.svg";
+import { useCart } from "../context/cartContext";
+import apiService from "../utils/api";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
 function PrimaryHeader() {
-
-    const dispatch = useDispatch();
-    const userInfoString = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
+    const { items } = useCart();
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Check if userInfoString is a JSON string and parse it
-    const userInfo =
-        typeof userInfoString === "string"
-            ? JSON.parse(userInfoString)
-            : userInfoString || {};
+    // Get user info from the API wrapper instead of Redux
+    useEffect(() => {
+        const checkAuthStatus = () => {
+            const isAuthenticated = apiService.auth.isAuthenticated();
+            if (isAuthenticated) {
+                const userInfo = apiService.auth.getUser();
+                setUser(userInfo);
+            }
+            setIsLoading(false);
+        };
 
-    const handleLogout = () => {
-        // Dispatch the logout action
-        dispatch(logout());
-        navigate("/");
-        // Refresh the window after logout
-        window.location.reload();
+        checkAuthStatus();
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            // Use the API wrapper for logout
+            await apiService.auth.logout();
+            setUser(null);
+            navigate("/");
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
     };
-
-
 
     return (
         <header className="py-4 shadow-sm bg-white">
             <div className="container flex items-center justify-between">
-                <a href="/">
+                <Link to="/">
                     <img src={logo} alt="Logo" className="w-32" />
-                </a>
+                </Link>
 
                 <div className="w-full max-w-xl relative flex">
                     <span className="absolute left-4 top-3 text-lg text-gray-400">
@@ -52,36 +59,28 @@ function PrimaryHeader() {
                 </div>
 
                 <div className="flex items-center space-x-4">
-
-                    <a href="#" className="text-center text-gray-700 hover:text-primary transition relative">
+                    {/* Cart Link - Now using Link from react-router-dom */}
+                    <Link to="/cart" className="text-center text-gray-700 hover:text-primary transition relative">
                         <div className="text-2xl">
                             <i className="fa-solid fa-bag-shopping" />
                         </div>
                         <div className="text-xs leading-3">Cart</div>
-                        <div
-                            className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-                            2</div>
-                    </a>
+                        {items.length > 0 && (
+                            <div className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
+                                {items.length}
+                            </div>
+                        )}
+                    </Link>
 
+                    {/* User Menu */}
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
                             <Menu.Button className="">
-                                <div className="">
-                                    {userInfo.image ? (
-                                        <img
-                                            src={userInfo.image}
-                                            className="h-full w-full"
-                                            alt="getimg"
-                                        />
-                                    ) : (
-                                        <div href="#" className="text-center text-gray-700 hover:text-primary transition relative">
-                                            <div className="text-2xl">
-                                                <i className="fa-regular fa-user"></i>
-                                            </div>
-                                            <div className="text-xs leading-3">Account</div>
-                                        </div>
-                                    )}
-
+                                <div className="text-center text-gray-700 hover:text-primary transition relative">
+                                    <div className="text-2xl">
+                                        <i className="fa-regular fa-user"></i>
+                                    </div>
+                                    <div className="text-xs leading-3">Account</div>
                                 </div>
                             </Menu.Button>
                         </div>
@@ -97,24 +96,54 @@ function PrimaryHeader() {
                         >
                             <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
-                                    {Object.keys(userInfo).length > 0 ? (
+                                    {!isLoading && user ? (
                                         <>
-                                            <h1 className="text-center">
-                                                {Object.keys(userInfo).length > 0 && userInfo.firstName}
-                                            </h1>
-                                            <h1 className="text-center">
-                                                {Object.keys(userInfo).length > 0 && userInfo.roles}
-                                            </h1>
+                                            <div className="px-4 py-2 text-sm text-gray-700">
+                                                <p className="font-medium text-center">{user.name}</p>
+                                                <p className="text-gray-500 text-center">{user.email}</p>
+                                            </div>
+                                            <hr className="my-1" />
+                                            {user.role === "admin" && (
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                        <Link
+                                                            to="/admin/dashboard"
+                                                            className={classNames(
+                                                                active
+                                                                    ? "bg-gray-100 text-gray-900"
+                                                                    : "text-gray-700",
+                                                                "block px-4 py-2 text-sm text-center"
+                                                            )}
+                                                        >
+                                                            Admin Dashboard
+                                                        </Link>
+                                                    )}
+                                                </Menu.Item>
+                                            )}
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <button
-                                                        onClick={handleLogout}
-                                                        type="submit"
+                                                    <Link
+                                                        to="/my-orders"
                                                         className={classNames(
                                                             active
                                                                 ? "bg-gray-100 text-gray-900"
                                                                 : "text-gray-700",
-                                                            "block w-full px-4 py-2  text-sm text-center"
+                                                            "block px-4 py-2 text-sm text-center"
+                                                        )}
+                                                    >
+                                                        My Orders
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <button
+                                                        onClick={handleLogout}
+                                                        className={classNames(
+                                                            active
+                                                                ? "bg-gray-100 text-gray-900"
+                                                                : "text-gray-700",
+                                                            "block w-full px-4 py-2 text-sm text-center"
                                                         )}
                                                     >
                                                         Sign out
@@ -126,8 +155,8 @@ function PrimaryHeader() {
                                         <>
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <a
-                                                        href="/login"
+                                                    <Link
+                                                        to="/login"
                                                         className={classNames(
                                                             active
                                                                 ? "bg-gray-100 text-gray-900"
@@ -136,13 +165,13 @@ function PrimaryHeader() {
                                                         )}
                                                     >
                                                         Login
-                                                    </a>
+                                                    </Link>
                                                 )}
                                             </Menu.Item>
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <a
-                                                        href="/register"
+                                                    <Link
+                                                        to="/register"
                                                         className={classNames(
                                                             active
                                                                 ? "bg-gray-100 text-gray-900"
@@ -151,7 +180,7 @@ function PrimaryHeader() {
                                                         )}
                                                     >
                                                         Register
-                                                    </a>
+                                                    </Link>
                                                 )}
                                             </Menu.Item>
                                         </>
@@ -160,17 +189,10 @@ function PrimaryHeader() {
                             </Menu.Items>
                         </Transition>
                     </Menu>
-
-                    {/* <a href="#" className="text-center text-gray-700 hover:text-primary transition relative">
-                        <div className="text-2xl">
-                            <i className="fa-regular fa-user"></i>
-                        </div>
-                        <div className="text-xs leading-3">Account</div>
-                    </a> */}
                 </div>
             </div>
         </header>
-    )
+    );
 }
 
-export default PrimaryHeader
+export default PrimaryHeader;

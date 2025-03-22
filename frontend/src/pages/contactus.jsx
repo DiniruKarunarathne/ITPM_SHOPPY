@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import apiService from '../utils/api';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const ContactUs = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,14 +58,18 @@ const ContactUs = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validateForm()) {
       setIsSubmitting(true);
+      setSubmitError(false);
       
-      setTimeout(() => {
-        setIsSubmitting(false);
+      try {
+        // Use the API wrapper to submit the contact form
+        const response = await apiService.contact.submit(formData);
+        
+        // Handle successful submission
         setSubmitSuccess(true);
         setFormData({
           name: '',
@@ -72,10 +78,21 @@ const ContactUs = () => {
           message: ''
         });
         
+        // Reset success message after 5 seconds
         setTimeout(() => {
           setSubmitSuccess(false);
         }, 5000);
-      }, 1500);
+        
+      } catch (err) {
+        console.error('Contact form submission error:', err);
+        setSubmitError(true);
+        setErrorMessage(
+          err.response?.data?.message || 
+          'Something went wrong. Please try again later.'
+        );
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -194,7 +211,7 @@ const ContactUs = () => {
                   <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9v4a1 1 0 102 0V9a1 1 0 10-2 0zm0-4a1 1 0 112 0 1 1 0 01-2 0z" clipRule="evenodd" />
                   </svg>
-                  <span>Something went wrong. Please try again later.</span>
+                  <span>{errorMessage}</span>
                 </div>
               )}
               

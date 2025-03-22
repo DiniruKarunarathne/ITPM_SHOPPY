@@ -1,50 +1,37 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './index.css';
-import store from "./auth/redux/store"
-
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import CartPage from "./pages/Cart";
+import CheckoutPage from "./pages/Checkout";
+import ProductsPage from "./pages/Shoptest";
 import ContactUs from "./pages/contactus";
 import AdminContactUs from "./admin/admin-contactus";
+import AdminProducts from "./admin/admin-products";
 import Home from "./pages/Home/Home";
-
-
-
 import PrimaryHeader from "./components/PrimaryHeader";
 import SecondaryHeader from "./components/SecondaryHeader";
-import { Provider } from "react-redux";
 import Footer from "./components/home/Footer";
-
-
-
 
 function App() {
   return (
-    <Provider store={store}>
     <BrowserRouter>
-
-      <PrimaryHeader />
+          <PrimaryHeader />
       <SecondaryHeader /> 
      
-
-
-      
-
-       
-        {/* Apply margin top to the content after the Header */}
         <Routes>
-          <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
           <Route path="/admin/contactus" element={<AdminContactUs />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/" element={<Home />} />
-          
-
-        {/* <Feedback /> */}
-
-        
+          <Route path="/login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/shop" element={<ProductsPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
-    </Provider>
+
   );
 }
-
 export default App;
