@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./auth/redux/store";
+import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import { AuthContextProvider } from "./context/authContext"; // ✅ Import the Provider
+
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <AuthContextProvider> {/* ✅ Wrap inside AuthContextProvider */}
+        <BrowserRouter>
+          <Toaster />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+          <ToastContainer position="bottom-center" autoClose={5000} theme="dark" />
+        </BrowserRouter>
+      </AuthContextProvider>
+    </Provider>
   );
 }
 
