@@ -13,18 +13,17 @@ function LoginForm({ email, password, onChange, handleSubmit, errors = {} }) {
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Email Address
           </label>
-          <div className="relative">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={onChange}
-              className={`block w-full pl-3 pr-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors?.email ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="you@example.com"
-              required
-            />
-          </div>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none ${
+              errors?.email ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="you@example.com"
+          />
           {errors?.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
         </div>
 
@@ -32,19 +31,17 @@ function LoginForm({ email, password, onChange, handleSubmit, errors = {} }) {
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             Password
           </label>
-          <div className="relative">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={onChange}
-              minLength="8"
-              className={`block w-full pl-3 pr-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${errors?.password ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="••••••••"
-              required
-            />
-          </div>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none ${
+              errors?.password ? 'border-red-500' : 'border-gray-300'
+            }`}
+            placeholder="••••••••"
+          />
           {errors?.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
         </div>
 
@@ -73,7 +70,7 @@ function LoginForm({ email, password, onChange, handleSubmit, errors = {} }) {
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
           Don't have an account?{" "}
-          <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+          <a href="/Register" className="font-medium text-blue-600 hover:text-blue-500">
             Sign up
           </a>
         </p>

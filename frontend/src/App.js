@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import { AuthContextProvider } from "./context/authContext"; // ✅ Import the Provider
 
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Toaster />
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/Register" element={<Register />} />
           </Routes>
           <ToastContainer position="bottom-center" autoClose={5000} theme="dark" />
         </BrowserRouter>
