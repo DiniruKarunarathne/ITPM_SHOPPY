@@ -1,36 +1,54 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./auth/redux/store";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Toaster } from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
-import { AuthContextProvider } from "./context/authContext"; // ✅ Import the Provider
+import { fetchAllCartItems } from "./services/redux/productSlice";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import FooterSecondary from "./components/FooterSecondary";
 
-import CartPage from "./pages/Cart";
-import CheckoutPage from "./pages/Checkout";
-import ProductsPage from "./pages/Shoptest";
+import Shop from "./pages/shop";
+import Cart from "./pages/Cart";
+
+import { ToastContainer, toast } from "react-toastify";
+import Checkout from "./pages/Checkout";
+
+
+
 
 function App() {
-  return (
-    <Provider store={store}>
-      <AuthContextProvider> {/* ✅ Wrap inside AuthContextProvider */}
-        <BrowserRouter>
-          <Toaster />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/Register" element={<Register />} />
+  const dispatch = useDispatch();
 
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/shoptest" element={<ProductsPage />} />
-          </Routes>
-          <ToastContainer position="bottom-center" autoClose={5000} theme="dark" />
-        </BrowserRouter>
-      </AuthContextProvider>
-    </Provider>
+  useEffect(() => {
+    // Fetch all cart items when the app mounts
+    dispatch(fetchAllCartItems());
+  }, [dispatch]);
+
+  return (
+    <BrowserRouter>
+      <Toaster />
+
+      <Routes>
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div style={{ marginTop: "10%" }}>
+        <FooterSecondary />
+      </div>
+    </BrowserRouter>
   );
 }
 

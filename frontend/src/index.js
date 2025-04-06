@@ -1,21 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
-
+import "./main.css";
 import App from "./App";
+import { AuthContextProvider } from "./context/authContext";
+import { Provider } from "react-redux";
 
-import { CartProvider } from "./context/cartContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    
-        <React.StrictMode>
-           
-                <CartProvider>
-                    <App />
-                </CartProvider>
-           
-        </React.StrictMode>
-   
+  <Provider>
+    <React.StrictMode>
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    </React.StrictMode>
+    </Provider>
 );
