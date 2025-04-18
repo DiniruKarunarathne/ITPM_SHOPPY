@@ -9,6 +9,9 @@ import { AuthContextProvider } from "./context/authContext"; // ✅ Import the P
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminReview from "./pages/AdminReview";
+
 function App() {
   return (
     <Provider store={store}>
@@ -18,6 +21,8 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
+            <Route path="/AdminDashboard" element={<AdminDashboard />} />
+            <Route path="/adminReview" element={<AdminReview />} />
           </Routes>
           <ToastContainer position="bottom-center" autoClose={5000} theme="dark" />
         </BrowserRouter>
