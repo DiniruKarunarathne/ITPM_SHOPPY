@@ -39,7 +39,8 @@ sx={{
 
         },
     }}
->shoppy @shoppy</Typography>
+>Shoppy@copy</Typography>
+
 
 </Box>
 
