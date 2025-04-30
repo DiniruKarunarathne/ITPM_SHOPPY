@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { API_BASE_URL } from "../../utils/constants";
 import Reviews from "../../components/reviews/showReviews";
 import DefaultButton from "../../components/home/DefaultButton";
+import "boxicons";
 import Rating from "../../components/reviews/rating";
 
 const Menu = () => {
@@ -77,7 +78,7 @@ const Menu = () => {
               <span>{productDisplay.price}</span>
             </p>
             <div className="flex gap-3 ml-12">
-              <DefaultButton title="Add to Cart" onClick={handleAddCartProduct} />
+              <DefaultButton title="Shop Now" onClick={handleAddCartProduct} />
             </div>
           </div>
         </div>
