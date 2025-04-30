@@ -1,19 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Toaster } from "react-hot-toast";
-import { fetchAllCartItems } from "./services/redux/productSlice";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import FooterSecondary from "./components/FooterSecondary";
-
-import Shop from "./pages/shop";
-import Cart from "./pages/Cart";
-
-import { ToastContainer, toast } from "react-toastify";
-import Checkout from "./pages/Checkout";
-
-
-
+import logo from './logo.svg';
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,31 +10,22 @@ function App() {
   }, [dispatch]);
 
   return (
-    <BrowserRouter>
-      <Toaster />
-
-      <Routes>
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
-
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <div style={{ marginTop: "10%" }}>
-        <FooterSecondary />
-      </div>
-    </BrowserRouter>
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
   );
 }
 

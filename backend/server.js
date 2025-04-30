@@ -1,3 +1,5 @@
+
+const router = require("./routes/sellerRoute.js");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -11,7 +13,8 @@ const port = process.env.PORT || 5000;
 // use middleware
 app.use(
   cors({
-    origin: "*", // allow to server to accept request from different origin
+
+    origin: "http://localhost:3000",
     // origin: 'http://localhost:3001',
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
@@ -29,6 +32,7 @@ app.use(require("./routes/cart.router.js"));
 app.use(require("./routes/payment.route.js"));
 app.use("/api/item", require("./routes/itemsRoute.js"));
 app.use("/api/seller", require("./routes/sellerRoute.js"));
+
 
 
 con
