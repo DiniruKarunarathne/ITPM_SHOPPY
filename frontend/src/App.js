@@ -1,18 +1,17 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./auth/redux/store";
-import { Toaster } from "react-hot-toast";
-import { ToastContainer } from "react-toastify";
-import { AuthContextProvider } from "./context/authContext"; // ✅ Import the Provider
-
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import logo from './logo.svg';
+import './App.css';
 
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminReview from "./pages/AdminReview";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Fetch all cart items when the app mounts
+    dispatch(fetchAllCartItems());
+  }, [dispatch]);
+
   return (
     <Provider store={store}>
       <AuthContextProvider> {/* ✅ Wrap inside AuthContextProvider */}
