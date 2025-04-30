@@ -1,5 +1,5 @@
 const authRouter = require("./routes/auth.router.js");
-const router = require("./routes/sellerRoute.js");
+// const router = require("./routes/sellerRoute.js");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
