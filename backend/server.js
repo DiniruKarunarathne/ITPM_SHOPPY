@@ -13,7 +13,8 @@ const port = process.env.PORT || 5000;
 // use middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Change this to the origin of your frontend application
+
+    origin: "http://localhost:3000",
     // origin: 'http://localhost:3001',
     credentials: true, // Enable credentials (cookies, authorization headers, etc.)
   })
@@ -27,10 +28,10 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 // mongodb connection
 const con = require("./db/connection.js");
 
-// using routes
-//authentication route
+app.use(require("./routes/cart.router.js"));
+app.use(require("./routes/payment.route.js"));
+app.use("/api/item", require("./routes/itemsRoute.js"));
 app.use("/api/seller", require("./routes/sellerRoute.js"));
-
 
 
 
