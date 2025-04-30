@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import Login from "./pages/Login";
 // import Register from "./pages/Register";
@@ -13,10 +13,10 @@ import Home from "./pages/Home/Home";
 import PrimaryHeader from "./components/PrimaryHeader";
 import SecondaryHeader from "./components/SecondaryHeader";
 import Footer from "./components/home/Footer";
-=======
-import logo from './logo.svg';
-import './App.css';
->>>>>>> b730af62a49f8f4bd0fee3310cc3a538cbd39c75
+
+
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import AdminReview from "./pages/AdminReview";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ function App() {
   }, [dispatch]);
 
   return (
-<<<<<<< HEAD
+
     <BrowserRouter>
           <PrimaryHeader />
       <SecondaryHeader /> 
@@ -47,24 +47,7 @@ function App() {
       <Footer />
     </BrowserRouter>
 
-=======
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
->>>>>>> b730af62a49f8f4bd0fee3310cc3a538cbd39c75
+
   );
 }
 export default App;

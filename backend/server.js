@@ -1,3 +1,4 @@
+
 const authRouter = require("./routes/auth.router.js");
 const router = require("./routes/sellerRoute.js");
 const express = require("express");
@@ -67,3 +68,4 @@ con
   .catch((error) => {
     console.log(`Connection Failed...! ${error}`);
   });
+
