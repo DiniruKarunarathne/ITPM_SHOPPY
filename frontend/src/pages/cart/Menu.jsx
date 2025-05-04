@@ -77,8 +77,8 @@ const Menu = () => {
               <span className="text-red-500">Rs.</span>
               <span>{productDisplay.price}</span>
             </p>
-            <div className="flex gap-3 ml-12">
-              <DefaultButton title="Shop Now" onClick={handleAddCartProduct} />
+            <div className="flex gap-3 ml-10">
+              <DefaultButton title="Add to Cart" onClick={handleAddCartProduct} />
             </div>
           </div>
         </div>
